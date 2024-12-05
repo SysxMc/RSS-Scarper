@@ -1,7 +1,28 @@
 import requests,re
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import subprocess
 
+def extract_htv():
+    commands = [
+        ["htv", "new-uploads", "-u", "-a"],
+        ["htv", "ALL", "-u", "-a"],
+        ["htv", "new-releases", "-u", "-a"]
+    ]   
+    links = []
+    for command in commands:
+        try:
+            result = subprocess.run(command, capture_output=True, text=True, check=True)
+            data = result.stdout
+            video_lines = data.split('\n')
+            for i in range(1, len(video_lines)):
+                video = video_lines[i]
+                if video.endswith('.m3u8'):
+                    links.append([video_lines[i - 1].split(":")[0], "https:" + video.split(":")[-1]])  
+        except subprocess.CalledProcessError as e:
+            print(f"Error executing command {command}:")
+            print(e.stderr)   
+    return links
 
 
 def extract_hanime():
