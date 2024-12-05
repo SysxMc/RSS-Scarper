@@ -1,5 +1,4 @@
-from sub import *
-import csv
+
 import asyncio
 import os
 import random
@@ -8,40 +7,47 @@ from bs4 import BeautifulSoup
 import logging
 import subprocess
 import json
+from sub import * 
 
 feed_filename = "links.txt"
 
-
-
-
-
-
 async def fetch_all():
-        links = []
-        mislinks = await extract_missav("https://missav.com/dm561/en/uncensored-leak", end_page=2)
-        print("Staring")
-        for link in mislinks:
+    existing_links = set()
+    if os.path.exists(feed_filename):
+        with open(feed_filename, 'r') as feed:
+            existing_links = set(line.strip().split('|-|')[-1] for line in feed)  
+    new_links = []
+    mislinks = await extract_missav("https://missav.com/dm561/en/uncensored-leak", end_page=2)
+    print("Starting Crawling")
+    
+    for link in mislinks:
+        if link[-1] not in existing_links:  # Check if link is new
             src_result = await crawl_missav(link[-1])  # Await the coroutine
             src = src_result[-1]  # Access the last element of the returned result
             link.append(src)
-            links.append(link)
-        vids = extract_hanime()
-        links.extend(vids)
-        vids = extract_htv()
-        links.extend(vids)
-        
-        return links
-
-
+            new_links.append(link)
+    vids = extract_hanime()
+    for vid in vids:
+        if vid[-1] not in existing_links:
+            new_links.append(vid)
+    vids = extract_htv()
+    for vid in vids:
+        if vid[-1] not in existing_links:
+            new_links.append(vid)
+    return new_links
 
 async def main():
-       with open(feed_filename,"a+") as feed:
-              links = await fetch_all()
-              for link in links:
-                   feed.write("|-|".join(link)+"\n")
+    new_links = await fetch_all()
+    all_links = set()
+    if os.path.exists(feed_filename):
+        with open(feed_filename, 'r') as feed:
+            all_links = set(feed.read().splitlines())
+    for link in new_links:
+        all_links.add("|-|".join(link))
+    with open(feed_filename, 'w') as feed:
+        for link in all_links:
+            feed.write(link + "\n")
+    print(f"Added {len(new_links)} new links")
 
-
-
-
-
-asyncio.run(main())
+if __name__ == "__main__":
+    await main()
