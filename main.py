@@ -21,11 +21,11 @@ async def fetch_all():
             src = src_result[-1]  # Access the last element of the returned result
             link.append(src)
             links.append(link)
-       vids = extract_hanime()
-       links.extend(vids)
-       vids = extract_htv()
-       links.extend(vids)
-       return links
+        vids = extract_hanime()
+        links.extend(vids)
+        vids = extract_htv()
+        links.extend(vids)
+        return links
 
 
 
