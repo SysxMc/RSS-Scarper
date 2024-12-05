@@ -28,9 +28,8 @@ async def fetch_all():
         vids = extract_hanime()
         links.extend(vids)
         vids = extract_htv()
-        #links.extend(vids)
-        print(vids)
-
+        links.extend(vids)
+        
         return links
 
 
