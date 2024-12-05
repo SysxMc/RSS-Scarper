@@ -12,3 +12,31 @@ import json
 feed_filename = "links.txt"
 
 
+
+async fetch_all():
+        links = []
+        mislinks = await fetch_pages(base_url, end_page=pages)
+        for link in mislinks:
+            src_result = await crawl_missav(link[-1])  # Await the coroutine
+            src = src_result[-1]  # Access the last element of the returned result
+            link.append(src)
+            links.append(link)
+       vids = extract_hanime()
+       links.extend(vids)
+       vids = extract_htv()
+       links.extend(vids)
+       return links
+
+
+
+async def main():
+       with open(feed_filename,"a+") as feed:
+              links = fetch_all()
+              for link in links:
+                   file.write(link+"\n")
+
+
+
+
+
+asyncio.run(main())
