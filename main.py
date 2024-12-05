@@ -38,7 +38,7 @@ async def main():
        with open(feed_filename,"a+") as feed:
               links = await fetch_all()
               for link in links:
-                   feed.write(link+"\n")
+                   feed.write("|||".join(link)+"\n")
 
 
 
