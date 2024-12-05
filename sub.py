@@ -1,8 +1,9 @@
 import requests,re
 from bs4 import BeautifulSoup
 from crawl4ai import AsyncWebCrawler
-from urllib.parse import urljoin
+from urllib.parse import urljoin,unquote
 import subprocess
+
 
 def extract_htv():
     commands = [
