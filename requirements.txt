@@ -1,3 +1,4 @@
+hanimetv
 crawl4ai
 python-dotenv
 yt_dlp==2024.9.27
