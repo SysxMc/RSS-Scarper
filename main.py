@@ -13,17 +13,24 @@ feed_filename = "links.txt"
 
 
 
+
+
+
 async def fetch_all():
         links = []
         mislinks = await extract_missav("https://missav.com/dm561/en/uncensored-leak", end_page=2)
+        print("Staring")
         for link in mislinks:
             src_result = await crawl_missav(link[-1])  # Await the coroutine
             src = src_result[-1]  # Access the last element of the returned result
             link.append(src)
+            print(link)
             links.append(link)
         vids = extract_hanime()
+        print(vids)
         links.extend(vids)
         vids = extract_htv()
+        print(vids)
         links.extend(vids)
         return links
 
