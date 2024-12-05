@@ -81,7 +81,7 @@ async def crawl_missav(link):
             ]
             return title[0] if title else None, videos[0] if videos else None
     except Exception as e:
-        print(f"Error while crawling link {link}: {e}", exc_info=True)
+        print(f"Error while crawling link {link}: {e}")
         return None, None
 
 
