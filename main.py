@@ -31,7 +31,7 @@ async def fetch_all():
 
 async def main():
        with open(feed_filename,"a+") as feed:
-              links = fetch_all()
+              links = await fetch_all()
               for link in links:
                    file.write(link+"\n")
 
