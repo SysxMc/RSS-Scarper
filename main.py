@@ -13,7 +13,7 @@ feed_filename = "links.txt"
 
 
 
-async fetch_all():
+async def fetch_all():
         links = []
         mislinks = await fetch_pages(base_url, end_page=pages)
         for link in mislinks:
