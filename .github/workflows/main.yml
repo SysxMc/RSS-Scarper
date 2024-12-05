@@ -40,11 +40,18 @@ jobs:
       - name: Run Python Script
         run: python main.py  # Replace with your script name
       
+      # Create directory for GitHub Pages
+      - name: Prepare GitHub Pages directory
+        run: |
+          mkdir -p generated_pages
+          mv links.txt generated_pages/ 
+      
+      # Upload the 
       # Upload the generated content as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: 'links.txt'  # Directory where your script generates content
+          path: './generated_pages'  # Directory where your script generates content
 
   # Job to deploy to GitHub Pages
   deploy-to-pages:
