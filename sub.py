@@ -54,7 +54,6 @@ def extract_hanime():
                   if response.status_code == 200:
                       soup = BeautifulSoup(response.content, 'html.parser')
                       result = [ a['src'] for a in soup.find_all('source', src=True)]
-                      print([title,img,result[0]])
                       d = [title,result[0]]
                       if d not in data:
                          data.append(d)         
