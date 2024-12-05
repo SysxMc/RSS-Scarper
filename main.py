@@ -24,14 +24,12 @@ async def fetch_all():
             src_result = await crawl_missav(link[-1])  # Await the coroutine
             src = src_result[-1]  # Access the last element of the returned result
             link.append(src)
-            print(link)
             links.append(link)
         vids = extract_hanime()
-        print(vids)
         links.extend(vids)
-        vids = extract_htv()
-        print(vids)
-        links.extend(vids)
+        #vids = extract_htv()
+        #links.extend(vids)
+
         return links
 
 
@@ -40,7 +38,7 @@ async def main():
        with open(feed_filename,"a+") as feed:
               links = await fetch_all()
               for link in links:
-                   file.write(link+"\n")
+                   feed.write(link+"\n")
 
 
 
