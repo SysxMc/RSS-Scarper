@@ -15,7 +15,7 @@ feed_filename = "links.txt"
 
 async def fetch_all():
         links = []
-        mislinks = await fetch_pages(base_url, end_page=pages)
+        mislinks = await extract_missav("https://missav.com/dm561/en/uncensored-leak", end_page=2)
         for link in mislinks:
             src_result = await crawl_missav(link[-1])  # Await the coroutine
             src = src_result[-1]  # Access the last element of the returned result
