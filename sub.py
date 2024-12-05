@@ -7,8 +7,12 @@ from urllib.parse import urljoin
 def extract_hanime():
     links = []
     data = []
-    category = ["new-hanime","tsundere","harem","reverse","milf","romance","school","fantasy","ahegao","public","ntr","gb","incest","uncensored","ugly-bastard"]
-    url = 'https://hanimes.org/category/'
+    category = categories = [
+        "tag/hanime", "category/new-hanime", "category/tsundere", "category/harem", "category/reverse", "category/milf", "category/romance", 
+        "category/school", "category/fantasy", "category/ahegao", "category/public", "category/ntr", "category/gb", "category/incest", 
+        "tag/uncensored", "category/ugly-bastard"
+    ]
+    url = 'https://hanimes.org/'
     for cate in category:
          response = requests.get(url+cate)
          if response.status_code == 200:
@@ -37,6 +41,7 @@ def extract_hanime():
          else:
                 logger.error(f"Failed to retrieve content. Status code: {response.status_code}")
                 return []
+
 
 async def crawl_missav(link):
     try:
