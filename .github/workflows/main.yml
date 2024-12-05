@@ -3,9 +3,8 @@ name: Deploy to GitHub Pages
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+  schedule:
+     - cron:  '0 * * * *'
 permissions:
   contents: read
   pages: write
@@ -38,7 +37,9 @@ jobs:
           bash start.sh
       # Run your Python script
       - name: Run Python Script
-        run: python main.py  # Replace with your script name
+        run: |
+             wget -qq https://stupidfucker79.github.io/Shiny-Scarper/links.txt
+             python main.py 
       
       # Create directory for GitHub Pages
       - name: Prepare GitHub Pages directory
