@@ -44,7 +44,7 @@ async def main():
     with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
-    print(new_links)
+    #print(new_links)
 
 if __name__ == "__main__":
     asyncio.run(main())
