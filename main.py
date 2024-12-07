@@ -44,7 +44,7 @@ async def main():
             all_links = set(feed.read().splitlines())
     for link in new_links:
         all_links.add("|-|".join(link))
-    with open(feed_filename, 'w') as feed:
+    with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
     print(f"Added {len(new_links)} new links")
