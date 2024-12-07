@@ -58,7 +58,9 @@ async def main():
     with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
-    print(feed_filename)
+    for link in all_links:
+            print(link + "\n")
+  
   
 
 
