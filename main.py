@@ -10,6 +10,20 @@ from sub import *
 
 feed_filename = "links.txt"
 
+
+
+
+
+def upload(file_path):
+  try:
+     url = "https://bashupload.com"
+     result = subprocess.run(['curl', '-T', file_path, url], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     print(result.stdout.decode())
+  except subprocess.CalledProcessError as e:
+     print("Error:", e.stderr.decode())
+
+
+
 async def fetch_all():
     existing_links = set()
     if os.path.exists(feed_filename):
@@ -44,7 +58,9 @@ async def main():
     with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
-    #print(new_links)
+    upload(feed_filename)
+  
+
 
 if __name__ == "__main__":
     asyncio.run(main())
