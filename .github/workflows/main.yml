@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
   schedule:
      - cron:  '0 * * * *'
+
 permissions:
   contents: read
   pages: write
@@ -23,31 +24,16 @@ jobs:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      # Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      
-      # Install any dependencies your script might need
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          bash start.sh
-      # Run your Python script
-      - name: Run Python Script
-        run: |
-             wget -qq https://stupidfucker79.github.io/Shiny-Scarper/links.txt
-             python main.py 
-      
-      # Create directory for GitHub Pages
-      - name: Prepare GitHub Pages directory
-        run: |
-          mkdir -p generated_pages
-          mv links.txt generated_pages/ 
-      
-      # Upload the 
+      - name: Building Image
+        run: docker build -t bot .
+      - name: Running Container
+        run: docker run --name GenBot bot
+      - name: Copy File from Container
+        run: mkdir -p generated_pages
+             docker cp GenBot:links.txt ./generated_pages/
+      - name: Remove Container
+        run: docker rm GenBot
+    
       # Upload the generated content as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
