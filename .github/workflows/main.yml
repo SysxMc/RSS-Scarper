@@ -29,8 +29,10 @@ jobs:
       - name: Running Container
         run: docker run --name GenBot bot
       - name: Copy File from Container
-        run: mkdir -p generated_pages
+        run: |
+             mkdir -p generated_pages
              docker cp GenBot:links.txt ./generated_pages/
+             cat links.txt
       - name: Remove Container
         run: docker rm GenBot
     
