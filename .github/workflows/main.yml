@@ -27,11 +27,11 @@ jobs:
       - name: Building Image
         run: docker build -t bot .
       - name: Running Container
-        run: docker run --name GenBot bot | bash crawl.sh
+        run: docker run --name GenBot bot > links.txt
       - name: Getting File
         run: |
             mkdir -p generated_pages
-            cp links.txt ./generated_pages/     
+            mv links.txt ./generated_pages/     
       # Upload the generated content as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
