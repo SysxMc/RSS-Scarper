@@ -8,7 +8,7 @@ url=$(echo "$command_output" | grep -oP 'http[s]?://\S+')
 
 # If a URL was found, print it
 if [ -n "$url" ]; then
-  echo "Found URL: $url"
+  wget "$url"
 else
   echo "No URL found."
 fi
