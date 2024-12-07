@@ -1,4 +1,3 @@
-
 import asyncio
 import os
 import random
@@ -18,8 +17,6 @@ async def fetch_all():
             existing_links = set(line.strip().split('|-|')[-1] for line in feed)  
     new_links = []
     mislinks = await extract_missav("https://missav.com/dm561/en/uncensored-leak", end_page=2)
-    print("Starting Crawling")
-    
     for link in mislinks:
         if link[-1] not in existing_links:  # Check if link is new
             src_result = await crawl_missav(link[-1])  # Await the coroutine
@@ -47,7 +44,7 @@ async def main():
     with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
-    print(f"Added {len(new_links)} new links")
+    print(new_links)
 
 if __name__ == "__main__":
     asyncio.run(main())
