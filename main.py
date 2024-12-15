@@ -1,4 +1,3 @@
-
 import asyncio
 import os
 import random
@@ -11,6 +10,20 @@ from sub import *
 
 feed_filename = "links.txt"
 
+
+
+
+
+def upload(file_path):
+  try:
+     url = "https://bashupload.com"
+     result = subprocess.run(['curl', '-T', file_path, url], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     print(result.stdout.decode())
+  except subprocess.CalledProcessError as e:
+     print("Error:", e.stderr.decode())
+
+
+
 async def fetch_all():
     existing_links = set()
     if os.path.exists(feed_filename):
@@ -18,8 +31,6 @@ async def fetch_all():
             existing_links = set(line.strip().split('|-|')[-1] for line in feed)  
     new_links = []
     mislinks = await extract_missav("https://missav.com/dm561/en/uncensored-leak", end_page=2)
-    print("Starting Crawling")
-    
     for link in mislinks:
         if link[-1] not in existing_links:  # Check if link is new
             src_result = await crawl_missav(link[-1])  # Await the coroutine
@@ -43,11 +54,15 @@ async def main():
         with open(feed_filename, 'r') as feed:
             all_links = set(feed.read().splitlines())
     for link in new_links:
-        all_links.add("|-|".join(link))
-    with open(feed_filename, 'w') as feed:
+        all_links.add(link[-1])
+    with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
-    print(f"Added {len(new_links)} new links")
+    for link in all_links:
+            print(link + "\n")
+  
+  
+
 
 if __name__ == "__main__":
     asyncio.run(main())
