@@ -5,3 +5,5 @@ yt_dlp==2024.9.27
 git+https://github.com/Hrishi2861/pyrofork-2.2.11-peer-fix.git 
 aria2 
 TgCrypto
+requests
+beautifulsoup4
