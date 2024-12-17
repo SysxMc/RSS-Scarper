@@ -27,10 +27,7 @@ jobs:
       - name: Building Image
         run: docker build -t bot .
       - name: Running Container
-        run: docker run --name GenBot bot > links.txt
-      - name: Running Guru Script
-        run: pip install -r requirements.txt && python guru.py
-             
+        run: docker run --name GenBot bot > links.txt       
       - name: Getting File
         run: |
             mkdir -p generated_pages
