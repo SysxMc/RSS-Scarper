@@ -4,31 +4,15 @@ import re
 from urllib.parse import urljoin
 import xml.etree.ElementTree as ET
 from datetime import datetime
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
 import os
-import uvicorn
 import asyncio
 from crawl4ai import AsyncWebCrawler
-
-app = FastAPI()
 
 crawler = AsyncWebCrawler()
    
 all_data = []
 
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the JAV Torrents RSS Feed!"}
-
-
-@app.get("/rss")
-def serve_rss():
-    file_path = "torrents.rss"
-    if os.path.exists(file_path):
-        return FileResponse(file_path, media_type="application/rss+xml")
-    return {"error": "RSS feed not found"}
 
 
 def torrents_to_rss(torrents):
@@ -126,7 +110,7 @@ def main():
             print(f"Main Process Error on page {i}: {e}")
 
     try:
-        rss_feed = torrents_to_rss(data)
+        rss_feed = torrents_to_rss(all_data)
         with open("torrents.rss", "w", encoding="utf-8") as f:
             f.write(rss_feed)
     except Exception as e:
@@ -135,4 +119,3 @@ def main():
 
 if __name__ == "__main__":
     await main()
-    uvicorn.run(app, host="0.0.0.0", port=80)
