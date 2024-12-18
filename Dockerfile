@@ -20,6 +20,8 @@ COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 RUN crawl4ai-setup
 RUN playwright install-deps 
+RUN playwright install chrome
+
 
 # Create output directory and set permissions
 RUN mkdir -p /app/output && chmod -R 777 /app/output
