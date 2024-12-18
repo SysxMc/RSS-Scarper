@@ -8,7 +8,7 @@ import subprocess
 import json
 from sub import * 
 
-feed_filename = "links.txt"
+feed_filename = "./generated_pages/links.txt"
 
 
 
@@ -58,9 +58,6 @@ async def main():
     with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
-    for link in all_links:
-            print(link + "\n")
-  
   
 
 
