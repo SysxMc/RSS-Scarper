@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 import asyncio
 from crawl4ai import AsyncWebCrawler
+import os
 
 crawler = AsyncWebCrawler()
 all_data = []
@@ -139,7 +140,8 @@ async def main():
                 print(f"Main Process Error on page {i}: {e}")
 
         rss_feed = torrents_to_rss(all_data)
-        with open("torrents.rss", "w", encoding="utf-8") as f:
+        os.makedirs("./generated_pages", exist_ok=True)
+        with open("/generated_pages/torrents.rss", "w", encoding="utf-8") as f:
             f.write(rss_feed)
     except Exception as e:
         print(f"RSS Generation Error: {e}")
