@@ -1,2 +1,2 @@
-python3 main.py
-python3 guru.py
+python3 guru.py > guru.log
+cat torrents.rss
