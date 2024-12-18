@@ -141,6 +141,7 @@ async def main():
         rss_feed = torrents_to_rss(all_data)
         with open("torrents.rss", "w", encoding="utf-8") as f:
             f.write(rss_feed)
+        print(rss_feed)
     except Exception as e:
         print(f"RSS Generation Error: {e}")
 
