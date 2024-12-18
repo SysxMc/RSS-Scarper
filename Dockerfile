@@ -28,4 +28,4 @@ COPY *.py ./
 COPY *.txt ./
 
 # Command to run your application
-CMD ["python3", "guru.py"]
+CMD ["bash", "commands.sh"]
