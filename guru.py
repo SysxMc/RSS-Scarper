@@ -127,7 +127,7 @@ async def get_links(link):
 
 async def main():
     try:
-        for i in range(1, 31):
+        for i in range(1, 3):
             try:
                 links = await get_links(f"https://jav.guru/page/{i}/")
                 for link in links:
@@ -141,7 +141,6 @@ async def main():
         rss_feed = torrents_to_rss(all_data)
         with open("torrents.rss", "w", encoding="utf-8") as f:
             f.write(rss_feed)
-        print(rss_feed)
     except Exception as e:
         print(f"RSS Generation Error: {e}")
 
