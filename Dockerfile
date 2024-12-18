@@ -17,11 +17,8 @@ WORKDIR /app
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
-RUN crawl4ai-setup
-RUN playwright install-deps 
-RUN playwright install chrome
-
+COPY start.sh .
+RUN bash start.sh
 
 # Create output directory and set permissions
 RUN mkdir -p /app/output && chmod -R 777 /app/output
