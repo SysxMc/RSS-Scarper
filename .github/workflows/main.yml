@@ -27,11 +27,7 @@ jobs:
       - name: Building Image
         run: docker build -t bot .
       - name: Running Container
-        run: docker run --name GenBot bot > torrents.rss       
-      - name: Getting File
-        run: |
-            mkdir -p generated_pages
-            mv torrents.rss ./generated_pages/
+        run: docker run --name GenBot -v "$(pwd)/generated_pages:/app/generated_pages"  bot   
       # Upload the generated content as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
