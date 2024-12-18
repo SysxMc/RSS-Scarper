@@ -128,7 +128,7 @@ async def get_links(link):
 
 async def main():
     try:
-        for i in range(1, 3):
+        for i in range(1, 10):
             try:
                 links = await get_links(f"https://jav.guru/page/{i}/")
                 for link in links:
