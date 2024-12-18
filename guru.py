@@ -141,7 +141,7 @@ async def main():
 
         rss_feed = torrents_to_rss(all_data)
         os.makedirs("./generated_pages", exist_ok=True)
-        with open("/generated_pages/torrents.rss", "w", encoding="utf-8") as f:
+        with open("./generated_pages/torrents.rss", "w", encoding="utf-8") as f:
             f.write(rss_feed)
     except Exception as e:
         print(f"RSS Generation Error: {e}")
