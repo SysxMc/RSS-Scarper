@@ -1,2 +1,2 @@
-python3 guru.py > guru.log
-cat torrents.rss
+python3 guru.py
+mv torrents.rss ./generated_pages
