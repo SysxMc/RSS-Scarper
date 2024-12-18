@@ -26,6 +26,5 @@ RUN mkdir -p /app/output && chmod -R 777 /app/output
 # Copy only necessary files
 COPY *.py ./
 COPY *.txt ./
-COPY commands.sh .
 # Command to run your application
-CMD ["bash", "commands.sh"]
+CMD ["python3", "guru.py"]
