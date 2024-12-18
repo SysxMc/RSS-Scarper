@@ -4,7 +4,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-     - cron:  '0 * * * *'
+    - cron:  '0 * * * *'
 
 permissions:
   contents: read
@@ -27,12 +27,7 @@ jobs:
       - name: Building Image
         run: docker build -t bot .
       - name: Running Container
-        run: docker run --name GenBot bot > links.txt       
-      - name: Getting File
-        run: |
-            mkdir -p generated_pages
-            mv links.txt ./generated_pages/
-            mv torrents.rss ./generated_pages/
+        run: docker run --name GenBot -v "$(pwd)/generated_pages:/app/generated_pages"  bot   
       # Upload the generated content as an artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
