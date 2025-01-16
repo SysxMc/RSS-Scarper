@@ -30,7 +30,7 @@ async def fetch_all():
         with open(feed_filename, 'r') as feed:
             existing_links = set(line.strip().split('|-|')[-1] for line in feed)  
     new_links = []
-    mislinks = await extract_missav("https://missav.com/dm561/en/uncensored-leak", end_page=2)
+    mislinks = await extract_missav("https://missav.ws/dm561/en/uncensored-leak", end_page=2)
     for link in mislinks:
         if link[-1] not in existing_links:  # Check if link is new
             src_result = await crawl_missav(link[-1])  # Await the coroutine
