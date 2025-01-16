@@ -98,7 +98,7 @@ async def extract_missav(base_url, end_page):
                     exclude_social_media_links=True,
                 )
                 videos = [
-                    [img["alt"], img["src"], f"https://missav.com/en/{img['src'].split('/')[-2]}"]
+                    [img["alt"], img["src"], f"https://missav.ws/en/{img['src'].split('/')[-2]}"]
                     for img in result.media.get("images", [])
                     if img["src"] and "flag" not in img["src"]
                 ]
