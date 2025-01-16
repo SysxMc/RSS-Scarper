@@ -53,8 +53,8 @@ async def main():
     if os.path.exists(feed_filename):
         with open(feed_filename, 'r') as feed:
             all_links = set(feed.read().splitlines())
-    for link in new_links:
-        all_links.add(link[-1])
+    for i,link in enumerate(new_links):
+        all_links.add(str(i) + " ".join(link) + "\n")
     with open(feed_filename, 'w+') as feed:
         for link in all_links:
             feed.write(link + "\n")
