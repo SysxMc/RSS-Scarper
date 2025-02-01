@@ -1,7 +1,6 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
     - cron: '0 */6 * * *'
@@ -11,59 +10,43 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
-  # Job to run Python script and generate content
   generate-content:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Building Image
-        run: docker pull ghcr.io/stupidfucker79/shiny-scarper:latest
-    
-      - name: Running Container
-        run: docker run --rm  -v "$(pwd)/generated_pages:/app/generated_pages" ghcr.io/stupidfucker79/shiny-scarper:latest  
-      
-      - name: Cache Generated Pages
-        uses: actions/cache@v3
-        with:
-          path: generated_pages
-          key: ${{ runner.os }}-generated-pages-${{ github.run_id }}
 
-  # Job to deploy to GitHub Pages
+      - name: Pull Docker Image
+        run: docker pull ghcr.io/stupidfucker79/shiny-scarper:latest
+
+      - name: Run Docker Container to Generate Pages
+        run: |
+          mkdir -p generated_pages  # Ensure directory exists
+          docker run --rm -v "$(pwd)/generated_pages:/app/generated_pages" ghcr.io/stupidfucker79/shiny-scarper:latest  
+
+      - name: Debug Generated Files
+        run: ls -R generated_pages || echo "No generated pages found!"
+
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: generated_pages  # This is required for deployment
+
   deploy-to-pages:
     needs: generate-content
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Restore Cached Generated Pages
-        uses: actions/cache@v3
-        with:
-          path: generated_pages
-          key: ${{ runner.os }}-generated-pages-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-generated-pages-
-
       - name: Setup Pages
         uses: actions/configure-pages@v3
-
-      - name: Upload GitHub Pages Artifact
-        uses: actions/upload-artifact@v4.6.0
-        with:
-          path: generated_pages
 
       - name: Deploy to GitHub Pages
         id: deployment
