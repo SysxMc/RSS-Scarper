@@ -1,8 +1,3 @@
-I'll help you create a README.md for this repository. First, let me gather information about the repository to create a comprehensive README.
-
-Let me help you generate a comprehensive README for this repository. Based on the repository information and language composition, I'll create a professional README that highlights the key aspects of the project.
-
-```markdown
 # Shiny-Scarper
 
 A Python-based web scraping project with containerization support.
@@ -73,24 +68,3 @@ This project is currently not licensed. Consider adding a license to protect you
 ## Contact
 
 - Repository Owner: [MrxAravind](https://github.com/MrxAravind)
-
----
-
-**Note**: This is a new project under active development. Documentation and features will be updated regularly.
-```
-
-This README template provides:
-1. A clear project overview
-2. Technology stack breakdown
-3. Installation and usage instructions
-4. Contribution guidelines
-5. Project status and contact information
-
-To make this README even more specific and helpful, you might want to:
-1. Add specific examples of how to use the scraping functionality
-2. Include any configuration options
-3. List specific Python package requirements
-4. Add troubleshooting guidelines
-5. Provide more detailed usage scenarios
-
-Would you like me to help you customize any particular section of this README further?
