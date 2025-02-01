@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Generate and Commit Content
 
 on:
   workflow_dispatch:
@@ -6,16 +6,10 @@ on:
     - cron: '0 */6 * * *'
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  generate-content:
+  generate-and-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,30 +18,20 @@ jobs:
       - name: Pull Docker Image
         run: docker pull ghcr.io/stupidfucker79/shiny-scarper:latest
 
-      - name: Run Docker Container to Generate Pages
+      - name: Run Docker Container
         run: |
-          mkdir -p generated_pages  # Ensure directory exists
-          docker run --rm -v "$(pwd)/generated_pages:/app/generated_pages" ghcr.io/stupidfucker79/shiny-scarper:latest  
+          mkdir -p generated_pages
+          docker run --rm -v "$(pwd)/generated_pages:/app/generated_pages" ghcr.io/stupidfucker79/shiny-scarper:latest
 
       - name: Debug Generated Files
-        run: ls -R generated_pages || echo "No generated pages found!"
+        run: |
+          echo "Generated files:"
+          ls -R generated_pages || echo "No generated pages found!"
 
-      - name: Upload GitHub Pages Artifact
-        uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          path: generated_pages  # This is required for deployment
-
-  deploy-to-pages:
-    needs: generate-content
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add generated_pages
+          git commit -m "Auto-update content $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push
