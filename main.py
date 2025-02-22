@@ -51,7 +51,7 @@ async def fetch_all():
 async def main():
     new_links = await fetch_all()
     print(new_links)
-  
+    all_links = set()
     if os.path.exists(feed_filename):
         with open(feed_filename, 'r') as feed:
             all_links = set(feed.read().splitlines())
