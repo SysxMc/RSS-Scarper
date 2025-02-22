@@ -36,15 +36,16 @@ async def fetch_all():
             src_result = await crawl_missav(link[-1])  # Await the coroutine
             src = src_result[-1]  # Access the last element of the returned result
             link.append(src)
+            print(link)
             new_links.append(link)
-    vids = extract_hanime()
+    """vids = extract_hanime()
     for vid in vids:
         if vid[-1] not in existing_links:
             new_links.append(vid)
     vids = extract_htv()
     for vid in vids:
         if vid[-1] not in existing_links:
-            new_links.append(vid)
+            new_links.append(vid)"""
     return new_links
 
 async def main():
