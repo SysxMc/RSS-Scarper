@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:latest
 
 # Set noninteractive mode for apt-get
 ENV DEBIAN_FRONTEND=noninteractive
