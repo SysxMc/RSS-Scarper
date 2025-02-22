@@ -102,7 +102,7 @@ async def fetch_data(url):
             if len(extracted) == 3:
                 return {
                     "Poster": images[0] if images else None,
-                    "Code": extracted[0],
+                    "Code": extracted[0].replace("Release",""),
                     "Release Date": extracted[1],
                     "Views": extracted[2],
                     "Screenshots": images[1:],
@@ -128,7 +128,7 @@ async def get_links(link):
 
 async def main():
     try:
-        for i in range(1,5):
+        for i in range(1,2):
             try:
                 links = await get_links(f"https://jav.guru/page/{i}/")
                 for link in links:
