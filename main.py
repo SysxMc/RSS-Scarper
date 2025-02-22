@@ -34,6 +34,7 @@ async def fetch_all():
     for link in mislinks:
         if link[-1] not in existing_links:  # Check if link is new
             src_result = await crawl_missav(link[-1])  # Await the coroutine
+            print(src_result)
             src = src_result[-1]  # Access the last element of the returned result
             link.append(src)
             new_links.append(link)
