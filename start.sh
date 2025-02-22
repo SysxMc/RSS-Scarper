@@ -1,4 +1,4 @@
-pip install -r requirements.txt
+pip install -r requirements.txt --break-system-packages
 sudo apt-get install -y \
     libwoff1 \
     libopus0 \
