@@ -57,12 +57,10 @@ async def fetch_all():
     for vid in vids:
         if vid[-1] not in existing_links:
             new_links.append(vid)
-            print(vid)
     vids = extract_htv()
     for vid in vids:
         if vid[-1] not in existing_links:
             new_links.append(vid)
-            print(vid)
     return new_links
 
 async def main():
