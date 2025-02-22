@@ -7,20 +7,36 @@ import logging
 import subprocess
 import json
 from sub import * 
-
-feed_filename = "./generated_pages/links.txt"
-
+import xml.etree.ElementTree as ET
 
 
 
+feed_filename = "./generated_pages/links.rss"
 
-def upload(file_path):
-  try:
-     url = "https://bashupload.com"
-     result = subprocess.run(['curl', '-T', file_path, url], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-     print(result.stdout.decode())
-  except subprocess.CalledProcessError as e:
-     print("Error:", e.stderr.decode())
+
+
+
+def create_rss_feed(items: list) -> str:
+    # Create the root RSS element
+    rss = ET.Element("rss", version="2.0")
+    
+    # Create the channel element
+    channel = ET.SubElement(rss, "channel")
+    
+    # Add required channel elements
+    ET.SubElement(channel, "title").text = "Sample RSS Feed"
+    ET.SubElement(channel, "link").text = "https://example.com"
+    ET.SubElement(channel, "description").text = "This is a sample RSS feed."
+    
+    # Create item elements from the list
+    for item in items:
+        title, link = item
+        item_element = ET.SubElement(channel, "item")
+        ET.SubElement(item_element, "title").text = title
+        ET.SubElement(item_element, "link").text = link
+    
+    # Convert to a string
+    return ET.tostring(rss, encoding="utf-8", method="xml").decode("utf-8")
 
 
 
@@ -51,18 +67,10 @@ async def fetch_all():
 
 async def main():
     new_links = await fetch_all()
-    all_links = set()
-  
-    if os.path.exists(feed_filename):
-        with open(feed_filename, 'r') as feed:
-            all_links = set(feed.read().splitlines())
-    for i,link in enumerate(new_links):
-        all_links.add(str(i) + " ".join(link) + "\n")
-    with open(feed_filename, 'w+') as feed:
-        for link in all_links:
-            feed.write(link + "\n")
-  
-
+    rss_feed = create_rss_feed(new_links)
+    os.makedirs("./generated_pages", exist_ok=True)
+    with open(feed_filename, "w", encoding="utf-8") as f:
+        f.write(rss_feed)
 
 if __name__ == "__main__":
     asyncio.run(main())
