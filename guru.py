@@ -133,8 +133,10 @@ async def main():
                 links = await get_links(f"https://jav.guru/page/{i}/")
                 for link in links:
                     jav_data = await fetch_data(link)
+                    print(jav_data)
                     if jav_data:
                         torrents = search_sukebei(jav_data)
+                        print(torrents)
                         all_data.extend(torrents)
             except Exception as e:
                 print(f"Main Process Error on page {i}: {e}")
