@@ -36,8 +36,7 @@ async def fetch_all():
             src_result = await crawl_missav(link[-1])  # Await the coroutine
             src = src_result[-1]  # Access the last element of the returned result
             link.append(src)
-            print(link)
-            new_links.append(link)
+            new_links.append([link[0],link[-1]])
     vids = extract_hanime()
     for vid in vids:
         if vid[-1] not in existing_links:
