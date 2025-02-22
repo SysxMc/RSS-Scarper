@@ -38,20 +38,22 @@ async def fetch_all():
             link.append(src)
             print(link)
             new_links.append(link)
-    """vids = extract_hanime()
+    vids = extract_hanime()
     for vid in vids:
         if vid[-1] not in existing_links:
             new_links.append(vid)
+            print(vid)
     vids = extract_htv()
     for vid in vids:
         if vid[-1] not in existing_links:
-            new_links.append(vid)"""
+            new_links.append(vid)
+            print(vid)
     return new_links
 
 async def main():
     new_links = await fetch_all()
-    print(new_links)
     all_links = set()
+  
     if os.path.exists(feed_filename):
         with open(feed_filename, 'r') as feed:
             all_links = set(feed.read().splitlines())
