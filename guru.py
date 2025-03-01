@@ -110,8 +110,6 @@ async def fetch_data(url):
                 if img["src"] and ( img["src"].endswith(".jpg") or img["src"].endswith(".png") or img["src"].endswith(".jpeg")  ) and not img["src"].endswith("customfield1005.jpg") and not img["src"].endswith("pump-rest.jpg")  and not img["src"].endswith("600us.png") and "custom_field" not in img["src"] and not img["src"].startswith("https://cdn.javsts.com/wp-content/uploads/wordpress-popular-posts") 
             ]
             images = [ upload_image(img) for img in images]
-            print(images)
-            exit()
             soup = BeautifulSoup(result.html, "html.parser")
             patterns = [r"Code:\s*(\S+)", r"Release Date:\s*(\S+)", r"\s*(\S+) views"]
             matches = [re.search(pattern, soup.get_text()) for pattern in patterns]
