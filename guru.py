@@ -12,6 +12,20 @@ crawler = AsyncWebCrawler()
 all_data = []
 
 
+
+
+
+def upload_image(url):
+    api_url = "https://envs.sh"
+    payload = {'url': url}
+    response = requests.post(api_url, data=payload)
+    if response.status_code == 200:
+        print("Upload successful!")
+        return response.text
+    else:
+        print(f"Failed to upload: {response.status_code}")
+        return None
+
 def torrents_to_rss(torrents):
     rss = ET.Element("rss", {"version": "2.0"})
     channel = ET.SubElement(rss, "channel")
@@ -95,6 +109,7 @@ async def fetch_data(url):
                 for img in result.media["images"]
                 if img["src"] and ( img["src"].endswith(".jpg") or img["src"].endswith(".png") or img["src"].endswith(".jpeg")  ) and not img["src"].endswith("customfield1005.jpg") and not img["src"].endswith("pump-rest.jpg")  and not img["src"].endswith("600us.png") and "custom_field" not in img["src"] and not img["src"].startswith("https://cdn.javsts.com/wp-content/uploads/wordpress-popular-posts") 
             ]
+            images = [ upload_image(img) for img in images]
             soup = BeautifulSoup(result.html, "html.parser")
             patterns = [r"Code:\s*(\S+)", r"Release Date:\s*(\S+)", r"\s*(\S+) views"]
             matches = [re.search(pattern, soup.get_text()) for pattern in patterns]
