@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   generate-and-commit:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2204
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
