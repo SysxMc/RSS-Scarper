@@ -144,7 +144,7 @@ def main(url):
 if __name__ == "__main__":
     # Start scraping from the index page
     page = 1
-    While True:
+    while True:
          target_url = f'https://draftsex.porn/page{page}.html'  # Change this to the index URL
          main(target_url)
          page+=1
