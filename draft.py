@@ -139,7 +139,7 @@ def main(url):
         all_video_sources.extend(video_sources)
     
     # Save the extracted video sources to a file
-    save_video_sources_to_file(all_video_sources, "video_sources.txt")
+    save_video_sources_to_file(all_video_sources, "./generated_pages/draft_videos.txt)
 
 if __name__ == "__main__":
     # Start scraping from the index page
