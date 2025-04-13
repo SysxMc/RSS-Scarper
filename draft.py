@@ -96,7 +96,7 @@ def get_thisplayer_video(soup, base_url=None):
 
 def save_video_sources_to_file(video_sources, filename="video_sources.txt"):
     """Save extracted video sources to a text file."""
-    with open(filename, 'a+') as f:
+    with open(filename, 'w+') as f:
         for source in video_sources:
             f.write(f"{source['src']}\n")
     print(f"Saved {len(video_sources)} video sources to {filename}")
