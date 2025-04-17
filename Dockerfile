@@ -27,4 +27,4 @@ RUN mkdir -p /app/output && chmod -R 777 /app/output
 COPY *.py ./
 COPY *.txt ./
 # Command to run your application
-CMD ["bash", "-c", "python3 draft.py & wait"]
+CMD ["bash", "-c", "python3 guru.py python3 main.py & wait"]
